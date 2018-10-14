@@ -31,9 +31,9 @@ exports.create = async (req, res, next) => {
             return;
         }
         const objCreate = helperFamily.getObjCreate(req.body, ['name'], userSession);
-        const data = await repository.create(objCreate);
-        if (data)
-            userController.setFamilyCreated(data, userSession);
+        const familyCreated = await repository.create(objCreate);
+        if (familyCreated)
+            userController.setFamilyCreated(userSession, familyCreated);
         res.status(200).send(data);
     } catch (e) {
         switch (e.code) {
