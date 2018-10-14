@@ -3,8 +3,9 @@
 const repository = require("../repositories/user-repository");
 const emailService = require("../services/email-services");
 const authService = require("../services/auth-services");
-const helper = require("../helpers/all");
 const helperUser = require("../helpers/user-helper");
+const familyController = require("../controllers/family-controller");
+const accountController = require("../controllers/account-controller");
 
 exports.authenticate = async (req, res, next) => {
     try {
@@ -63,7 +64,7 @@ exports.put = async (req, res, next) => {
             res.status(400).send({ "message": "O usuário logado não tem permissão para atualizar o usuário solicitado" });
             return;
         }
-        const objPut = helperUser.getObjPut(req.body, ['name', 'family'], 'password');
+        const objPut = helperUser.getObjPut(req.body, ['firstName', 'lastName', 'family'], 'password');
         const data = await repository.update(req.params.id, objPut);
         res.status(200).send(data);
     } catch (e) {
@@ -98,9 +99,23 @@ exports.desactivate = async (req, res, next) => {
         }
         var userDesactivated = await repository.update(req.params.id, { active: false });
         if (userDesactivated) {
-            await helperUser.deleteUserFamily(userDesactivated);
-            await helperUser.desactivateAccountsUser(userDesactivated);
+            await accountController.desactivateAccounts(userDesactivated._id);
             res.status(200).send(userDesactivated);
+            return;
+        }
+        res.status(400).send({ "message": "Usuário não encontrado" });
+    } catch (e) {
+        res.status(500).send({ error: e });
+    }
+}
+
+exports.activate = async (req, res, next) => {
+    try {
+        var userActivate = await repository.update(req.params.id, { active: true });
+        if (userActivate) {
+            await accountController.activateAccounts(userActivate._id);
+            res.status(200).send(userActivate);
+            return;
         }
         res.status(400).send({ "message": "Usuário não encontrado" });
     } catch (e) {
@@ -109,15 +124,16 @@ exports.desactivate = async (req, res, next) => {
 }
 
 
+
 //INCREMENTO DO PADRÃO
 
 exports.insertFamily = async (req, res, next) => {
     try {
-        const userId = req.params.id;
+        const userId = req.body.id;
         const familyId = req.body.id;
         const objPut = { family: familyId };
         const data = await repository.update(userId, objPut);
-        helperUser.insertMember(userId, familyId);
+        await familyController.insertMember(userId, familyId);
         res.status(200).send(data);
     } catch (e) {
         res.status(500).send({ error: e });

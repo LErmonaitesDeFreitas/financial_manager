@@ -28,7 +28,6 @@ exports.getById = async (req, res, next) => {
 exports.post = async (req, res, next) => {
     try {
         const userSession = await authService.getSession(req);
-        console.log(userSession);
         const objPost = helperAccount.getObjPost(req.body, ['name', 'value', 'due_date'], userSession);
         const data = await repository.create(objPost);
         res.status(200).send(data);
@@ -68,6 +67,10 @@ exports.deleteAll = async (req, res, next) => {
 //INCRIMENTO DO PADRÃO
 exports.desactivateAccounts = async (userId) => {
     await repository.updateByCondition({ user: userId }, { active: false });
+}
+
+exports.activateAccounts = async (userId) => {
+    await repository.updateByCondition({ user: userId }, { active: true });
 }
 
 exports.clearAccountsFamily = (familyId) => {

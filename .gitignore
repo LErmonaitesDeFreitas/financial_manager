@@ -76,5 +76,7 @@ typings/
 # Serverless directories
 .serverless
 
+# My ignores
+package-lock.json
 
-# End of https://www.gitignore.io/api/node
+# End of https://www.gitignore.io/api/node'

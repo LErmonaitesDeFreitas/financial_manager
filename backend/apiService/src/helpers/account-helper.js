@@ -14,7 +14,6 @@ exports.getObjPost = (body, fields, userSession) => {
     return ret;
 }
 
-
 exports.getObjPut = (body, fields) => {
     var ret = {};
     fields.forEach(function (field) {

@@ -10,10 +10,11 @@ router.get('/:id', authService.authorize, controller.getById);
 router.post('/', controller.post);
 router.post("/authenticate", controller.authenticate);
 router.put('/:id', authService.authorize, controller.put);
+router.put("/admin/activate/:id", authService.isAdmin, controller.activate);
 router.put("/desactivate/:id", authService.authorize, controller.desactivate)
-router.put("family/insertFamily/:id", authService.isFamilyAdmin, controller.insertFamily);
+router.put("/family/insertFamily", authService.isFamilyAdmin, controller.insertFamily);
 router.put('/admin/elevateRoles', authService.isAdmin, controller.elevateRoles)
-router.delete('/:id', authService.isAdmin, controller.delete);
+router.delete('/admin/:id', authService.isAdmin, controller.delete);
 router.delete('/admin/all', authService.isAdmin, controller.deleteAll);
 
 module.exports = router;

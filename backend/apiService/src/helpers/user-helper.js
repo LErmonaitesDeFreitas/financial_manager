@@ -38,17 +38,3 @@ exports.getPassword = (password) => {
     return md5(password + global.SALT_KEY)
 }
 
-exports.insertMember = async  (userId, familyId) => {
-    const familyController = require("../controllers/family-controller");
-    await familyController.insertMember(userId, familyId);
-}
-
-exports.deleteUserFamily = (user) => {
-    const familyController = require("../controllers/family-controller");
-    familyController.deleteMember(user._id, user.family);
-}
-
-exports.desactivateAccountsUser = async (user) => {
-    const accountController = require("../controllers/account-controller");
-    await accountController.desactivateAccounts(user._id);
-}
