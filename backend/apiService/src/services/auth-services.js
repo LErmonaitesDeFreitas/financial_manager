@@ -75,7 +75,7 @@ exports.isFamilyAdmin = function (req, res, next) {
                     next();
                 } else {
                     res.status(403).json({
-                        message: 'Esta funcionalidade é restrita para administradores de familias'
+                        message: 'Esta funcionalidade é restrita para administradores de família'
                     });
                 }
             }

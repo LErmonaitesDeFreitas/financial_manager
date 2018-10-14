@@ -123,20 +123,13 @@ exports.activate = async (req, res, next) => {
     }
 }
 
-
-
+//INCREMENTANDO O PADRÃOS
 exports.setFamilyCreated = (user, family) => {
     const objSetFamily = {
         family: family._id
     };
     repository.update(user._id, objSetFamily);
     repository.push(user._id, "roles", "family-admin");
-};
-
-exports.clearUsersFamily = (familyId) => {
-    const condition = { family: familyId };
-    const set = { family: null };
-    repository.updateByCondition(condition, set);
 };
 
 exports.retireRole = (userId, role) => {

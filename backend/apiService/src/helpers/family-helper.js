@@ -20,18 +20,5 @@ exports.getObjPut = (body, fields) => {
     return ret;
 }
 
-exports.clearUsersFamily = (familyId) => {
-    const userController = require("../controllers/user-controller");
-    userController.clearUsersFamily(familyId);
-}
 
-exports.retireRole = (userId) => {
-    const userController = require("../controllers/user-controller");
-    userController.retireRole(userId, 'family-admin');
-}
-
-exports.clearAccountsFamily = (familyId) => {
-    const accountController = require("../controllers/account-controller");
-    accountController.clearAccountsFamily(familyId);
-}
 

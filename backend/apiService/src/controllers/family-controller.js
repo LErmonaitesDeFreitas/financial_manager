@@ -4,6 +4,7 @@ const repository = require("../repositories/family-repository");
 const authService = require("../services/auth-services");
 const helperFamily = require("../helpers/family-helper");
 const userController = require("../controllers/user-controller");
+const accountController = require("../controllers/account-controller");
 
 exports.get = async (req, res, next) => {
     try {
@@ -27,14 +28,17 @@ exports.create = async (req, res, next) => {
     try {
         const userSession = await authService.getSession(req);
         if (userSession.family) {
-            res.status(400).json({ error: 'EFAMILY01', message: "O usuário já possui uma familia" });
+            res.status(400).json({ error: 'EFAMILY01', message: "O usuário já possui uma família" });
             return;
         }
         const objCreate = helperFamily.getObjCreate(req.body, ['name'], userSession);
         const familyCreated = await repository.create(objCreate);
-        if (familyCreated)
+        if (familyCreated) {
             userController.setFamilyCreated(userSession, familyCreated);
-        res.status(200).send(data);
+            res.status(200).send(familyCreated);
+        } else {
+            res.status(500).send({ message: "Ocorreu um erro interno!" });
+        }
     } catch (e) {
         switch (e.code) {
             case 11000:
@@ -54,8 +58,11 @@ exports.put = async (req, res, next) => {
             return;
         }
         const objPut = helperFamily.getObjPut(req.body, ["name"]);
-        const data = await repository.update(req.params.id, objPut);
-        res.status(200).send(data);
+        const familyUpdated = await repository.update(req.params.id, objPut);
+        if (familyUpdated)
+            res.status(200).send(familyUpdated);
+        else
+            res.status(500).send({ message: "Ocorreu um erro interno!" });
     } catch (e) {
         res.status(500).send({ error: e });
     }
@@ -70,11 +77,12 @@ exports.desactivate = async (req, res, next) => {
         }
         const familyDesactivated = await repository.update(req.params.id, { active: false });
         if (familyDesactivated) {
-            helperFamily.clearUsersFamily(userSession.family);
-            helperFamily.clearAccountsFamily(userSession.family);
-            helperFamily.retireRole(userSession._id);
+            userController.retireRole(userSession._id, 'family-admin');
+            accountController.clearAccountsFamily(userSession.family);
+            res.status(200).send(familyDesactivated);
+        } else {
+            res.status(500).send({ message: "Ocorreu um erro interno!" });
         }
-        res.status(200).send(data);
     } catch (e) {
         res.status(500).send({ error: e });
     }
@@ -82,11 +90,14 @@ exports.desactivate = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
     try {
-        const family = await repository.delete(req.params.id);
-        helperFamily.clearUsersFamily(family._id);
-        helperFamily.clearAccountsFamily(family._id);
-        helperFamily.retireRole(family.manager);
-        res.status(200).send(family);
+        const familyDeleted = await repository.delete(req.params.id);
+        if (familyDeleted) {
+            userController.retireRole(userSession._id, 'family-admin');
+            accountController.clearAccountsFamily(userSession.family);
+            res.status(200).send(family);
+        } else {
+            res.status(500).send({ message: "Ocorreu um erro interno!" });
+        }
     } catch (e) {
         res.status(500).send({ error: e });
     }
