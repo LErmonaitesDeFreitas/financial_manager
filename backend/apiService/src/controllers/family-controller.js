@@ -1,12 +1,9 @@
 'use strict';
 
-const Validator = require("../validators/fluent-validator");
 const repository = require("../repositories/family-repository");
-const emailService = require("../services/email-services");
 const authService = require("../services/auth-services");
-const helper = require("../helpers/all");
 const helperFamily = require("../helpers/family-helper");
-
+const userController = require("../controllers/user-controller");
 
 exports.get = async (req, res, next) => {
     try {
@@ -15,7 +12,7 @@ exports.get = async (req, res, next) => {
     } catch (e) {
         res.status(500).send({ error: e });
     }
-}
+};
 
 exports.getById = async (req, res, next) => {
     try {
@@ -24,7 +21,7 @@ exports.getById = async (req, res, next) => {
     } catch (e) {
         res.status(500).send({ error: e });
     }
-}
+};
 
 exports.create = async (req, res, next) => {
     try {
@@ -35,7 +32,8 @@ exports.create = async (req, res, next) => {
         }
         const objCreate = helperFamily.getObjCreate(req.body, ['name'], userSession);
         const data = await repository.create(objCreate);
-        helperFamily.setFamilyCreated(data, userSession);
+        if (data)
+            userController.setFamilyCreated(data, userSession);
         res.status(200).send(data);
     } catch (e) {
         switch (e.code) {
@@ -46,7 +44,7 @@ exports.create = async (req, res, next) => {
                 res.status(500).send({ error: e });
         }
     }
-}
+};
 
 exports.put = async (req, res, next) => {
     try {
@@ -61,7 +59,7 @@ exports.put = async (req, res, next) => {
     } catch (e) {
         res.status(500).send({ error: e });
     }
-}
+};
 
 exports.desactivate = async (req, res, next) => {
     try {
@@ -80,7 +78,7 @@ exports.desactivate = async (req, res, next) => {
     } catch (e) {
         res.status(500).send({ error: e });
     }
-}
+};
 
 exports.delete = async (req, res, next) => {
     try {
@@ -92,7 +90,7 @@ exports.delete = async (req, res, next) => {
     } catch (e) {
         res.status(500).send({ error: e });
     }
-}
+};
 
 exports.deleteAll = async (req, res, next) => {
     try {
@@ -101,13 +99,13 @@ exports.deleteAll = async (req, res, next) => {
     } catch (e) {
         res.status(500).send({ error: e });
     }
-}
+};
 
 //INCREMENTO DO PADRÃO
 exports.insertMember = async (userId, familyId) => {
     await repository.push(familyId, "members", userId);
-}
+};
 
 exports.deleteMember = async (userId, familyId) => {
     await repository.pull(familyId, "members", userId);
-}
+};

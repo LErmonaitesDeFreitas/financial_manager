@@ -35,8 +35,3 @@ exports.clearAccountsFamily = (familyId) => {
     accountController.clearAccountsFamily(familyId);
 }
 
-exports.setFamilyCreated = (family, user) => {
-    const userController = require("../controllers/user-controller");
-    userController.setFamilyCreated(user, family);
-}
-
