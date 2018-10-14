@@ -1,0 +1,27 @@
+{
+  "name": "baltaio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
+    "body-parser": "^1.18.3",
+    "debug": "^4.0.1",
+    "express": "^4.16.3",
+    "guid": "0.0.12",
+    "http": "0.0.0",
+    "jsonwebtoken": "^7.4.0",
+    "md5": "^2.2.1",
+    "mongoose": "^5.3.1",
+    "sendgrid": "^5.2.3",
+    "sha256": "^0.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
