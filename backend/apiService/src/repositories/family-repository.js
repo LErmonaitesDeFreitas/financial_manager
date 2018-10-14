@@ -41,8 +41,14 @@ exports.deleteAll = async () => {
 
 exports.push = async (id, field, value) => {
     var family = await Family.findById(id);
-    if (family[field].includes(value))
-        return { message: "O usuário já possue o elemento " + value + " em " + field }
+    if (!family)
+        return { message: "A família não existe" };
+    var exist = family[field].find(function (item) {
+        return item == value;
+    });
+    if (exist)
+        return { message: "A família já possue o elemento " + value + " em " + field }
+
     family[field].push(value);
     const res = await family.save();
     return res;
@@ -50,8 +56,13 @@ exports.push = async (id, field, value) => {
 
 exports.pull = async (id, field, value) => {
     var family = await Family.findById(id);
-    if (!family[field].includes(value))
-        return { message: "O usuário já não possue o elemento " + value + " em " + field }
+    if (!family)
+        return { message: "A família não existe" };
+    var exist = family[field].find(function (item) {
+        return item == value;
+    });
+    if (!exist)
+        return { message: "A família já não possue o elemento " + value + " em " + field }
     family[field].pull(value);
     const res = await family.save();
     return res;

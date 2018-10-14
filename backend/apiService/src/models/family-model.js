@@ -20,7 +20,8 @@ const schema = new Schema({
     members: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
+        unique: true
     }],
     
     manager: {

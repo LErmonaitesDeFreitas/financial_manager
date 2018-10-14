@@ -55,7 +55,12 @@ exports.deleteAll = async () => {
 
 exports.push = async (id, field, value) => {
     var user = await User.findById(id);
-    if (user[field].includes(value))
+    if (!user)
+        return { message: "O usuário não existe" };
+    var exist = user[field].find(function (item) {
+        return item == value;
+    });
+    if (exist)
         return { message: "O usuário já possue o elemento " + value + " em " + field }
     user[field].push(value);
     const res = await user.save();
@@ -64,7 +69,12 @@ exports.push = async (id, field, value) => {
 
 exports.pull = async (id, field, value) => {
     var user = await User.findById(id);
-    if (!user[field].includes(value))
+    if (!user)
+        return { message: "O usuário não existe" };
+    var exist = user[field].find(function (item) {
+        return item == value;
+    });
+    if (!exist)
         return { message: "O usuário já não possue o elemento " + value + " em " + field }
     user[field].pull(value);
     const res = await user.save();

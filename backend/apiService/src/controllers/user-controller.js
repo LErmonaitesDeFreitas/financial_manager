@@ -55,7 +55,7 @@ exports.post = async (req, res, next) => {
                 res.status(500).send({ error: e });
         }
     }
-}; 
+};
 
 exports.put = async (req, res, next) => {
     try {
@@ -124,21 +124,6 @@ exports.activate = async (req, res, next) => {
 }
 
 
-
-//INCREMENTO DO PADRÃO
-
-exports.insertFamily = async (req, res, next) => {
-    try {
-        const userId = req.body.id;
-        const familyId = req.body.id;
-        const objPut = { family: familyId };
-        const data = await repository.update(userId, objPut);
-        await familyController.insertMember(userId, familyId);
-        res.status(200).send(data);
-    } catch (e) {
-        res.status(500).send({ error: e });
-    }
-}
 
 exports.setFamilyCreated = (user, family) => {
     const objSetFamily = {

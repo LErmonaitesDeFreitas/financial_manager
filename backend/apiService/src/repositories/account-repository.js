@@ -45,8 +45,13 @@ exports.deleteAll = async () => {
 
 exports.push = async (id, field, value) => {
     var account = await Account.findById(id);
-    if (account[field].includes(value))
-        return { message: "O usuário já possue o elemento " + value + " em " + field }
+    if (!account)
+        return { message: "A conta não existe" };
+    var exist = account[field].find(function (item) {
+        return item == value;
+    });
+    if (exist)
+        return { message: "A conta já possue o elemento " + value + " em " + field }
     account[field].push(value);
     const res = await account.save();
     return res;
@@ -54,8 +59,13 @@ exports.push = async (id, field, value) => {
 
 exports.pull = async (id, field, value) => {
     var account = await account.findById(id);
-    if (!account[field].includes(value))
-        return { message: "O usuário já não possue o elemento " + value + " em " + field }
+    if (!account)
+        return { message: "A conta não existe" };
+    var exist = account[field].find(function (item) {
+        return item == value;
+    });
+    if (!exist)
+        return { message: "A conta já não possue o elemento " + value + " em " + field }
     account[field].pull(value);
     const res = await account.save();
     return res;
