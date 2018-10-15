@@ -14,12 +14,14 @@ mongoose.connect(config.connectionString, { useNewUrlParser: true });
 const accountModel = require("./models/account-model");
 const familyModel = require("./models/family-model");
 const userModel = require("./models/user-model");
+const monthModel = require("./models/month-model");
 
 //CARREGANDO ROUTES;
 const indexRoutes = require("./routes/index-router");
 const accountRoutes = require('./routes/account-router');
 const familyRoutes = require("./routes/family-router");
 const userRoutes = require("./routes/user-router");
+const monthRoutes = require("./routes/month-router");
 
 
 
@@ -40,6 +42,7 @@ app.use('/', indexRoutes);
 app.use('/accounts', accountRoutes);
 app.use('/families', familyRoutes);
 app.use('/users', userRoutes);
+app.use('/months', monthRoutes);
 
 //EXPORTANDO
 module.exports = app;
