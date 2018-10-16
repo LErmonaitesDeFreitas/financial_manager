@@ -46,12 +46,16 @@ exports.post = async (req, res, next) => {
         const objPost = helperUser.getObjPost(req.body, ['firstName', 'lastName', 'email'], 'password');
         const userCreated = await repository.create(objPost);
         if (userCreated) {
-            monthController.createMonthsUser(userCreated);
-            emailService.send(req.body.email, 'Seja bem vindo ao Sistema', global.EMAIL_TMPL.replace('{0}', req.body.firstName));
-            res.status(200).send(data);
-        }
+            userCreated.months = await monthController.createMonthsUser(userCreated);
+            //emailService.send(req.body.email, 'Seja bem vindo ao Sistema', global.EMAIL_TMPL.replace('{0}', req.body.firstName));
+            res.status(200).send(userCreated);
+        } else {
+            res.status(500).send({ message: "Ocorreu um erro interno!" });
+        } 
+
 
     } catch (e) {
+        console.log(e);
         switch (e.code) {
             case 11000:
                 res.status(400).send({ message: "E-mail já cadastrado" });

@@ -63,18 +63,10 @@ exports.deleteAll = async (req, res, next) => {
 
 //INCRIMENTO DO PADRÃO
 
-exports.createMonthsUser = async (user) => {
-    const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-    const objCreate = {
-        user: user._id,
-        family: user.family,
-        salary: 0,
-        balance: 0,
-        accounts: []
-    };
-    months.map(function(month, index){
-        objCreate.number = index + 1;
-        objCreate.name = month;
-        repository.create()
+exports.createMonthsUser =  (user) => {
+    const lote = helperMonth.getObjCreateFromCreateMonthsUser(user);
+    const ret = lote.map(function(objCreate){
+        return repository.create(objCreate);
     });
+    return ret;
 }

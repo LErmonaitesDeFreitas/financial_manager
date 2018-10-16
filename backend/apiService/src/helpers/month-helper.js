@@ -24,16 +24,22 @@ exports.getObjPut = (body, fields) => {
 };
 
 exports.getObjCreateFromCreateMonthsUser = (user) => {
-    
-    const objCreate = {
-        user: user._id,
-        family: user.family,
-        salary: 0,
-        balance: 0,
-        accounts: []
-    };
+    const months = this.getMonths();
+    const ret = months.map(function (month, index) {
+        const objCreate = {
+            user: user._id,
+            family: user.family,
+            salary: 0,
+            balance: 0,
+            accounts: [],
+            number: index + 1,
+            name: month
+        };
+        return objCreate;
+    });
+    return ret;
 }
 
 exports.getMonths = () => {
-    return  ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    return ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 }
