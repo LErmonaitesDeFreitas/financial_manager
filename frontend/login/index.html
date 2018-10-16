@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sistema Financeiro</title>
+    <script src="../libs/jquery.js"></script>
+    <script src="../libs/angular.js"></script>
+    <script src="../libs/ngMask.min.js"></script>
+    <script src="../libs/utilities.js"></script>
+    <script src="../default.js"></script>
+    <script src="index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="../libs/fontawesome/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body ng-app="app" ng-controller="ctrl">
+    <div class="container" ng-show="showLogin">
+        <div class="row">
+            <form class="col s12" id="login-form" name="formLogin">
+                <h2 class="">Login</h2>
+                <div class="progress" ng-show="isLoading">
+                    <div class="indeterminate"></div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" type="email" class="validate" ng-model="user.email" required>
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" type="password" class="validate" minlength="6" ng-model="user.password"
+                            required>
+                        <label for="password">Senha</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col md6">
+                        <a class="waves-effect waves-light grey btn" ng-click="goRegister()">Registrar-se</a>
+                    </div>
+                    <div class="input-field col md6">
+                        <button class="waves-effect waves-light grey darken-3 btn" ng-disabled="formLogin.$invalid"
+                            ng-click="logar(user)">Logar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container" ng-show="showRegister">
+        <div class="row">
+            <form class="col s12" id="register-form" name="registerForm">
+                <h2>Cadastro</h2>
+                <div class="progress" ng-show="isLoading">
+                    <div class="indeterminate"></div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="first_name" type="text" class="validate" ng-model="user.firstName" required>
+                        <label for="first_name">Nome</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="last_name" type="text" class="validate" ng-model="user.lastName" required>
+                        <label for="last_name">Sobrenome</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="emailRegister" type="email" class="validate" ng-model="user.email" required>
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="passwordRegister" type="password" class="validate" minlength="6" ng-model="user.password"
+                            required>
+                        <label for="password">Senha</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="passwordConfirmRegister" type="password" class="validate" minlength="6" ng-model="senhaDois"
+                            required>
+                        <label for="password">Confirmar Senha</label>
+                    </div>
+                    <div class="error" ng-if="senhaDois != user.password && registerForm.$valid">
+                        <strong>Erro: </strong>As senhas não coincidem
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col md6">
+                        <a class="waves-effect waves-light grey btn" ng-click="goLogin()">Voltar</a>
+                    </div>
+                    <div class="input-field col md6">
+                        <button class="waves-effect waves-light grey darken-3 btn" ng-disabled="registerForm.$invalid || senhaDois != user.password"
+                            ng-click="createUser(user)">Registrar-se</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

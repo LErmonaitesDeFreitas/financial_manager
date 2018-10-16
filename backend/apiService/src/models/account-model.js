@@ -25,6 +25,11 @@ const schema = new Schema({
         type: Date,
         required: true
     },
+
+    month: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Month'
+    },
     
     user: {
         type: mongoose.Schema.Types.ObjectId,

@@ -28,7 +28,7 @@ exports.getById = async (req, res, next) => {
 exports.post = async (req, res, next) => {
     try {
         const userSession = await authService.getSession(req);
-        const objPost = helperAccount.getObjPost(req.body, ['name', 'value', 'due_date'], userSession);
+        const objPost = helperAccount.getObjPost(req.body, ['name', 'value', 'due_date', 'month'], userSession);
         const data = await repository.create(objPost);
         res.status(200).send(data);
     } catch (e) {
@@ -38,7 +38,7 @@ exports.post = async (req, res, next) => {
 
 exports.put = async (req, res, next) => {
     try {
-        const objPut = helperAccount.getObjPut(req.body, ['active', 'name', 'value', 'due_date']);
+        const objPut = helperAccount.getObjPut(req.body, ['active', 'name', 'value', 'due_date', 'month']);
         const data = await repository.update(req.params.id, objPut);
         res.status(200).send(data);
     } catch (e) {

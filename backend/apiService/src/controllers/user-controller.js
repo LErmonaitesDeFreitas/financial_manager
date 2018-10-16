@@ -13,7 +13,7 @@ exports.authenticate = async (req, res, next) => {
         const password = helperUser.getPassword(req.body.password);
         const user = await repository.authenticate(req.body.email, password);
         if (!user) {
-            res.status(404).send({ message: "Usuário ou senha inválido(s)" });
+            res.status(200).send({error: "EUSER01", message: "Usuário ou senha inválido(s)" });
             return;
         }
         const token = await authService.generateToken(user);
@@ -47,18 +47,16 @@ exports.post = async (req, res, next) => {
         const userCreated = await repository.create(objPost);
         if (userCreated) {
             userCreated.months = await monthController.createMonthsUser(userCreated);
-            //emailService.send(req.body.email, 'Seja bem vindo ao Sistema', global.EMAIL_TMPL.replace('{0}', req.body.firstName));
+            emailService.send(req.body.email, 'Seja bem vindo ao Sistema', global.EMAIL_TMPL.replace('{0}', req.body.firstName));
             res.status(200).send(userCreated);
         } else {
             res.status(500).send({ message: "Ocorreu um erro interno!" });
         } 
-
-
     } catch (e) {
         console.log(e);
         switch (e.code) {
             case 11000:
-                res.status(400).send({ message: "E-mail já cadastrado" });
+                res.status(200).send({error: "EUSER02", message: "E-mail já cadastrado" });
                 break;
             default:
                 res.status(500).send({ error: e });
