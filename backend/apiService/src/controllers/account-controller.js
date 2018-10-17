@@ -1,10 +1,7 @@
 'use strict';
 
-const Validator = require("../validators/fluent-validator");
 const repository = require("../repositories/account-repository");
-const emailService = require("../services/email-services");
 const authService = require("../services/auth-services");
-const helper = require("../helpers/all");
 const helperAccount = require("../helpers/account-helper");
 
 exports.get = async (req, res, next) => {
