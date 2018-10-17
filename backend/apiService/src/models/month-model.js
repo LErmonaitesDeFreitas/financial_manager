@@ -4,11 +4,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    
+
     active: {
         type: Boolean,
         required: true,
         default: true
+    },
+
+    number: {
+        type: Number,
+        required: true,
     },
 
     name: {
@@ -16,21 +21,6 @@ const schema = new Schema({
         required: true,
     },
 
-    value: {
-        type: Number,
-        required: true
-    },
-    
-    due_date: {
-        type: Date,
-        required: true
-    },
-
-    month: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Month'
-    },
-    
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -39,7 +29,23 @@ const schema = new Schema({
     family: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Family'
-    }
+    },
+
+    salary: {
+        type: Number,
+        required: true
+    },
+
+    balance: {
+        type: Number
+    },
+
+    accounts: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Accounts'
+        }
+    ]
 });
 
-module.exports = mongoose.model ('Account', schema);
+module.exports = mongoose.model('Month', schema);clearImmediate

@@ -1,8 +1,8 @@
 'use strict';
 
-const repository = require("../repositories/account-repository");
+const repository = require("../repositories/month-repository");
 const authService = require("../services/auth-services");
-const helperAccount = require("../helpers/account-helper");
+const helperMonth = require("../helpers/month-helper");
 
 exports.get = async (req, res, next) => {
     try {
@@ -11,7 +11,7 @@ exports.get = async (req, res, next) => {
     } catch (e) {
         res.status(500).send({ message: "Erro ao processar a sua requisição" });
     }
-}
+};
 
 exports.getById = async (req, res, next) => {
     try {
@@ -20,12 +20,12 @@ exports.getById = async (req, res, next) => {
     } catch (e) {
         res.status(500).send({ message: "Erro ao processar a sua requisição" });
     }
-}
+};
 
 exports.post = async (req, res, next) => {
     try {
         const userSession = await authService.getSession(req);
-        const objPost = helperAccount.getObjPost(req.body, ['name', 'value', 'due_date', 'month'], userSession);
+        const objPost = helperMonth.getObjPost(req.body, ['name'], userSession);
         const data = await repository.create(objPost);
         res.status(200).send(data);
     } catch (e) {
@@ -35,7 +35,7 @@ exports.post = async (req, res, next) => {
 
 exports.put = async (req, res, next) => {
     try {
-        const objPut = helperAccount.getObjPut(req.body, ['active', 'name', 'value', 'due_date', 'month']);
+        const objPut = helperMonth.getObjPut(req.body, ['active', 'name', 'family', 'salary', 'balance', 'accounts']);
         const data = await repository.update(req.params.id, objPut);
         res.status(200).send(data);
     } catch (e) {
@@ -62,14 +62,12 @@ exports.deleteAll = async (req, res, next) => {
 }
 
 //INCRIMENTO DO PADRÃO
-exports.desactivateAccounts = async (userId) => {
-    await repository.updateByCondition({ user: userId }, { active: false });
+
+exports.createMonthsUser =  (user) => {
+    const lote = helperMonth.getObjCreateFromCreateMonthsUser(user);
+    const ret = lote.map(function(objCreate){
+        return repository.create(objCreate);
+    });
+    return ret;
 }
 
-exports.activateAccounts = async (userId) => {
-    await repository.updateByCondition({ user: userId }, { active: true });
-}
-
-exports.clearAccountsFamily = (familyId) => {
-    repository.updateByCondition({ family: familyId }, { family: null });
-}

@@ -78,5 +78,7 @@ typings/
 
 # My ignores
 package-lock.json
+libs/
+config.js
 
 # End of https://www.gitignore.io/api/node'
