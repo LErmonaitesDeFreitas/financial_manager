@@ -24,7 +24,7 @@ function controller($scope, $http) {
 				function (response) {
 					if (response.data.token) {
 						localStorage.user = JSON.stringify(response.data);
-						location.pathname = "financial_manager/frontend/dashboard";
+						location.pathname = "/dashboard";
 						$scope.isLoading = false;
 						return;
 					}
@@ -37,7 +37,7 @@ function controller($scope, $http) {
 			)
 			.catch(
 				function () {
-					myAlert("Ocorreu um erro interno, tente novamente mais tarde!");
+					myAlert("Ocorreu um erro interno, tente novamente mais tarde");
 					$scope.isLoading = false;
 				}
 			);
@@ -50,7 +50,7 @@ function controller($scope, $http) {
 			.then(
 				function (response) {
 					if (response.data._id) {
-						myAlert("Usuário criado com sucesso!");
+						myAlert("Usuário criado com sucesso");
 						$scope.goLogin();
 						$scope.isLoading = false;
 						return;
@@ -64,7 +64,7 @@ function controller($scope, $http) {
 			)
 			.catch(
 				function () {
-					myAlert("Ocorreu um erro interno, tente novamente mais tarde!");
+					myAlert("Ocorreu um erro interno, tente novamente mais tarde");
 					$scope.isLoading = false;
 				}
 			);
