@@ -8,7 +8,7 @@ exports.generateToken = async (data) => {
 exports.verify = async (token) => {
     var res = false;
     await jwt.verify(token, global.SALT_KEY, function (error, decoded) {
-        if (error) {console.log('entrou aquui error');
+        if (error) {
             res = false;
         } else {
             
