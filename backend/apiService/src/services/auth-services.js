@@ -5,13 +5,26 @@ exports.generateToken = async (data) => {
     return jwt.sign(data, global.SALT_KEY, { expiresIn: '1d' });
 }
 
+exports.verify = async (token) => {
+    var res = false;
+    await jwt.verify(token, global.SALT_KEY, function (error, decoded) {
+        if (error) {console.log('entrou aquui error');
+            res = false;
+        } else {
+            
+            res = true;
+        }
+    });
+    return res;
+}
+
 exports.decodeToken = async (token) => {
     var data = await jwt.verify(token, global.SALT_KEY);
     return data;
 }
 
 exports.authorize = function (req, res, next) {
-  
+
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
     if (!token) {

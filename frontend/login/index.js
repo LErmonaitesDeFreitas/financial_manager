@@ -17,7 +17,7 @@ function controller($scope, $http) {
 	}
 
 	$scope.logar = (user) => {
-		var endpoint = host + "/users/authenticate";
+		var endpoint = host + "/token/authenticate";
 		$scope.isLoading = true;
 		$http.post(endpoint, user)
 			.then(

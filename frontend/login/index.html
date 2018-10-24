@@ -50,7 +50,7 @@
                         <a class="waves-effect waves-light grey btn" ng-click="goRegister()">Registrar-se</a>
                     </div>
                     <div class="input-field col md6">
-                        <button class="waves-effect waves-light grey darken-3 btn" ng-disabled="formLogin.$invalid"
+                        <button class="waves-effect waves-light grey darken-3 btn" ng-disabled="formLogin.$invalid || isLoading"
                             ng-click="logar(user)">Logar</button>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                             required>
                         <label for="password">Confirmar Senha</label>
                     </div>
-                    <div class="error" ng-if="senhaDois != user.password && registerForm.$valid">
+                    <div class="error" ng-if="senhaDois != user.password && registerForm.$valid || isLoading">
                         <strong>Erro: </strong>As senhas não coincidem
                     </div>
                 </div>

@@ -22,7 +22,7 @@ const accountRoutes = require('./routes/account-router');
 const familyRoutes = require("./routes/family-router");
 const userRoutes = require("./routes/user-router");
 const monthRoutes = require("./routes/month-router");
-
+const tokenRoutes = require("./routes/token-router");
 
 
 //APP USE
@@ -43,6 +43,7 @@ app.use('/accounts', accountRoutes);
 app.use('/families', familyRoutes);
 app.use('/users', userRoutes);
 app.use('/months', monthRoutes);
+app.use('/token', tokenRoutes);
 
 //EXPORTANDO
 module.exports = app;
