@@ -1,7 +1,8 @@
 <script src="../token.js"></script>
 <script>
-    if (!tokenIsValid())
-        location.pathname = "/login"    
+    tokenIsValid(function(response){
+        console.log(response);
+    });
 </script>
 <!DOCTYPE html>
 <html lang="pt-BR">

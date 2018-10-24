@@ -1,21 +1,14 @@
- 
-tokenIsValid = () => {
+
+tokenIsValid = (callback) => {
     try {
+        var host = "http://localhost:3001";
         var user = JSON.parse(localStorage.user);
-        if (!user || !user.token)
-            return false;
-        var endpoint = host + "/token/verify/";
-        endpoint = localStorage.user.token;
+        var endpoint = host + "/token/verify/" + user.token;
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
-            }
-        };
+        xhttp.onreadystatechange = callback
         xhttp.open("POST", endpoint, true);
         xhttp.send();
-        return true;
     } catch (e) {
-        return false;
+
     }
 }
