@@ -27,7 +27,7 @@
             <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <!-- Dropdown Trigger -->
-                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Username<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{user.firstName}}<i class="material-icons right">arrow_drop_down</i></a></li>
             </ul>
         </div>
     </nav>
@@ -45,8 +45,8 @@
                     <img src="images/office.jpg">
                 </div>
                 <a href="#user"><img class="circle" src="images/eu.jpg"></a>
-                <a href="#name"><span class="white-text name">Lincoln Ermonaites</span></a>
-                <a href="#email"><span class="white-text email">lincolnermonaites@gmail.com</span></a>
+                <a href="#name"><span class="white-text name">{{user.firstName + " " + user.lastName}}</span></a>
+                <a href="#email"><span class="white-text email">{{user.email}}</span></a>
             </div>
         </li>
         <li><a><i class="material-icons">account_circle</i>Perfil</a></li>
