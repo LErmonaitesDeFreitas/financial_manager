@@ -19,7 +19,7 @@ tokenIsValid = (myCallback) => {
 tokenIsValid(function (isValid) {
     var route = location.pathname;
     route = route.split("/")[1];    
-                                        var redirect = "";
+    var redirect = "";
     switch (route) {
         case "login":
             if (isValid)
