@@ -1,17 +1,17 @@
 
+const hostToken = "http://financeiro.ermonaites.com.br:3001";
+const view = location.pathname.split("/")[1];
+
+
 tokenIsValid = (myCallback) => {
     try {
-        //var host = "http://localhost:3001";
 
-        const hostToken = "http://financeiro.ermonaites.com.br";
-
-        if (!localStorage.user)
+        if (!localStorage.user && view != "login")
             location.pathname = "/login";
 
         const user = JSON.parse(localStorage.user);
 
         const endpoint = hostToken + "/token/verify/" + user.token;
-
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -29,7 +29,6 @@ tokenIsValid = (myCallback) => {
 }
 
 tokenIsValid(function (isValid) {
-    const view = location.pathname.split("/")[1];
 
     if (!isValid && view == "login")
         return;
@@ -41,3 +40,5 @@ tokenIsValid(function (isValid) {
         location.pathname = "/dashboard";
 
 });
+
+
