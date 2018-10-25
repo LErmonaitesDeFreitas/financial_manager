@@ -2,7 +2,7 @@
 
 var app = angular.module("app", []);
 app.controller("ctrl", controller);
-const host = "http://localhost:3001";
+const host = "http://financeiro.ermonaites.com.br:3001";
 
 function controller($scope, $http) {
 
