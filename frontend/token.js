@@ -1,36 +1,39 @@
 
 tokenIsValid = (myCallback) => {
     try {
-        var teste = "";
-        var host = "http://localhost:3001";
-        var user = JSON.parse(localStorage.user);
-        var endpoint = host + "/token/verify/" + user.token;
+        const host = "http://localhost:3001";
+        if (!localStorage.user)
+            location.pathname = "/login";
+
+        const user = JSON.parse(localStorage.user);
+
+        const endpoint = host + "/token/verify/" + user.token;
+
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                myCallback(JSON.parse(this.responseText).isValid);
+                const isValid = JSON.parse(this.responseText).isValid;
+                myCallback(isValid);
             }
         }
         xhttp.open("POST", endpoint, true);
         xhttp.send();
-    } catch (e) {
 
+    } catch (e) {
+        myCallback(false);
     }
 }
+
 tokenIsValid(function (isValid) {
-    var route = location.pathname;
-    route = route.split("/")[1];    
-    var redirect = "";
-    switch (route) {
-        case "login":
-            if (isValid)
-                redirect = "dashboard";
-            break;
-        case "dashboard":
-            if (!isValid)
-                redirect = "login";
-            break;
-    }
-    if (redirect != route)
-        location.pathname = "/" + redirect;
+    const view = location.pathname.split("/")[1];
+
+    if (!isValid && view == "login")
+        return;
+
+    if (!isValid && view != "login")
+        location.pathname = "/login";
+
+    if (isValid && view == "login")
+        location.pathname = "/dashboard";
+
 });
