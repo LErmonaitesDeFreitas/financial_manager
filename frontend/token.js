@@ -1,7 +1,7 @@
 
 tokenIsValid = (myCallback) => {
     try {
-        const host = "http://localhost:3001";
+        var host = "http://localhost:3001";
         if (!localStorage.user)
             location.pathname = "/login";
 
