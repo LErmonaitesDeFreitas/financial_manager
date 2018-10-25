@@ -1,6 +1,7 @@
 
 tokenIsValid = (myCallback) => {
     try {
+        var teste = "";
         var host = "http://localhost:3001";
         var user = JSON.parse(localStorage.user);
         var endpoint = host + "/token/verify/" + user.token;
