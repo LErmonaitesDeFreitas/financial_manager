@@ -35,7 +35,7 @@ tokenIsValid(function (isValid) {
     if (!isValid && view != "login")
         location.pathname = "/login";
 
-    if (isValid && view == "login")
+    if (isValid && view == "login" || view == "")
         location.pathname = "/dashboard";
 
 });
