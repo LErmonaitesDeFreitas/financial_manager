@@ -29,7 +29,6 @@ tokenIsValid = (myCallback) => {
 }
 
 tokenIsValid(function (isValid) {
-
     if (!isValid && view == "login")
         return;
 
