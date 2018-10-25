@@ -25,7 +25,6 @@ function controller($scope, $http) {
 					if (response.data.token) {
 						localStorage.user = JSON.stringify(response.data);
 						location.pathname = "/dashboard";
-						$scope.isLoading = false;
 						return;
 					}
 					if (response.data.error) {
