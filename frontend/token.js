@@ -41,4 +41,8 @@ tokenIsValid(function (isValid) {
 
 });
 
+logout = () => {
+    localStorage.user = undefined;
+    location.pathname = "/login";
+}
 
