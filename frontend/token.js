@@ -29,13 +29,11 @@ tokenIsValid = (myCallback) => {
 }
 
 tokenIsValid(function (isValid) {
-    if (!isValid && view == "login")
-        return;
 
     if (!isValid && view != "login")
         location.pathname = "/login";
 
-    if (isValid && view == "login" || view == "")
+    if (isValid && (view == "login" || view == ""))
         location.pathname = "/dashboard";
 
 });
