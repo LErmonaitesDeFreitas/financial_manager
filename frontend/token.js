@@ -3,16 +3,14 @@ tokenIsValid = (myCallback) => {
     try {
         //var host = "http://localhost:3001";
 
-        var host = "http://financeiro.ermonaites.com.br";
-        var user = JSON.parse(localStorage.user);
-        var endpoint = host + "/token/verify/" + user.token; 
+        const hostToken = "http://financeiro.ermonaites.com.br";
 
         if (!localStorage.user)
             location.pathname = "/login";
 
         const user = JSON.parse(localStorage.user);
 
-        const endpoint = host + "/token/verify/" + user.token;
+        const endpoint = hostToken + "/token/verify/" + user.token;
 
 
         var xhttp = new XMLHttpRequest();
