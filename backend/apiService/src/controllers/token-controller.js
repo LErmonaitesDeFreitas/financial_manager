@@ -4,6 +4,7 @@ const emailService = require("../services/email-services");
 const authService = require("../services/auth-services");
 const repository = require("../repositories/user-repository");
 const helperUser = require("../helpers/user-helper");
+const monthController = require("../controllers/month-controller");
 
 exports.authenticate = async (req, res, next) => {
     try {
@@ -14,7 +15,9 @@ exports.authenticate = async (req, res, next) => {
             return;
         }
         const token = await authService.generateToken(user);
-        res.status(200).send({ token: token, user: user });
+        const currentMonth = await monthController.getCurrentMonth(user._id);
+        const response = { token: token, user: user, currentMonth: currentMonth };
+        res.status(200).send(response);
     } catch (e) {
         res.status(500).send({ error: e });
     }

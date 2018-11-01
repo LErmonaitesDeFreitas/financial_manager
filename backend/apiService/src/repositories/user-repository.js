@@ -27,7 +27,7 @@ exports.getById = async (id) => {
 
 exports.create = async (data) => {
     var user = new User(data);
-    const res = await user.save()
+    const res = await user.save();
     return res;
 };
 

@@ -43,3 +43,7 @@ exports.getObjCreateFromCreateMonthsUser = (user) => {
 exports.getMonths = () => {
     return ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 }
+
+exports.getCurrentMonth = (months) => {
+    return months[new Date().getMonth()];
+}

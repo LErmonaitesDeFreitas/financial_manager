@@ -1,5 +1,5 @@
 
-const hostToken = "http://financeiro.ermonaites.com.br:3001";
+const hostToken = localStorage.host;
 const view = location.pathname.split("/")[1];
 
 

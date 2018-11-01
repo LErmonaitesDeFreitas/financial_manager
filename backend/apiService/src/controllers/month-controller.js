@@ -63,11 +63,30 @@ exports.deleteAll = async (req, res, next) => {
 
 //INCRIMENTO DO PADRÃO
 
-exports.createMonthsUser =  (user) => {
-    const lote = helperMonth.getObjCreateFromCreateMonthsUser(user);
-    const ret = lote.map(function(objCreate){
-        return repository.create(objCreate);
-    });
-    return ret;
+exports.createMonthsUser = async (user) => {
+    const lote = await helperMonth.getObjCreateFromCreateMonthsUser(user);
+    var months = [];
+    for (var i = 0; i < lote.length; i++) {
+        const month = await await repository.create(lote[i]);
+        months.push(month);
+    }
+    return months;
+}
+
+exports.getMonthsByUser = async (user) => {
+    const filter = { user: user };
+    const data = await repository.get(JSON.stringify(filter));
+    return data;
+}
+
+exports.getCurrentMonth = async (user) => {
+    const filter = {
+        user: user,
+        number: new Date().getMonth() + 1
+    }
+    const data = await repository.get(JSON.stringify(filter));
+    if (data)
+        return data[0];
+    return;
 }
 

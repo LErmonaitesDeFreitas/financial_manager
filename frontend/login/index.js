@@ -2,7 +2,7 @@
 
 var app = angular.module("app", []);
 app.controller("ctrl", controller);
-const host = "http://financeiro.ermonaites.com.br:3001";
+const hostLogin = localStorage.host;
 
 function controller($scope, $http) {
 
@@ -17,7 +17,7 @@ function controller($scope, $http) {
 	}
 
 	$scope.logar = (user) => {
-		var endpoint = host + "/token/authenticate";
+		var endpoint = hostLogin + "/token/authenticate";
 		$scope.isLoading = true;
 		$http.post(endpoint, user)
 			.then(
@@ -43,16 +43,15 @@ function controller($scope, $http) {
 	};
 
 	$scope.createUser = (user) => {
-		var endpoint = host + "/users";
+		var endpoint = hostLogin + "/users";
 		$scope.isLoading = true;
 		$http.post(endpoint, user)
 			.then(
 				function (response) {
-					if (response.data._id) {
-						myAlert("Usuário criado com sucesso");
-						$scope.goLogin();
+					if (response.data.user._id) {
+						localStorage.user = JSON.stringify(response.data);
 						$scope.isLoading = false;
-						return;
+						location.pathname = "/dashboard";
 					}
 					if (response.data.error) {
 						myAlert(response.data.message);

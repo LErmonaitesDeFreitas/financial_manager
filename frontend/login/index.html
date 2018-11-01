@@ -1,3 +1,4 @@
+<script src="../config.js"></script>
 <script src="../token.js"></script>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -29,13 +30,13 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email" type="email" class="validate" ng-model="user.email" required>
+                        <input id="email" type="email" class="validate" ng-model="userLogin.email" required>
                         <label for="email">Email</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="password" type="password" class="validate" minlength="6" ng-model="user.password"
+                        <input id="password" type="password" class="validate" minlength="6" ng-model="userLogin.password"
                             required>
                         <label for="password">Senha</label>
                     </div>
@@ -47,7 +48,7 @@
                     </div>
                     <div class="input-field col md6">
                         <button class="waves-effect waves-light grey darken-3 btn" ng-disabled="formLogin.$invalid || isLoading"
-                            ng-click="logar(user)">Logar</button>
+                            ng-click="logar(userLogin)">Logar</button>
                     </div>
                 </div>
             </form>
@@ -90,7 +91,7 @@
                             required>
                         <label for="password">Confirmar Senha</label>
                     </div>
-                    <div class="error" ng-if="senhaDois != user.password && registerForm.$valid || isLoading">
+                    <div class="error" ng-if="senhaDois != user.password && registerForm.$valid">
                         <strong>Erro: </strong>As senhas não coincidem
                     </div>
                 </div>
@@ -100,7 +101,7 @@
                         <a class="waves-effect waves-light grey btn" ng-click="goLogin()">Voltar</a>
                     </div>
                     <div class="input-field col md6">
-                        <button class="waves-effect waves-light grey darken-3 btn" ng-disabled="registerForm.$invalid || senhaDois != user.password"
+                        <button class="waves-effect waves-light grey darken-3 btn" ng-disabled="registerForm.$invalid || senhaDois != user.password || isLoading"
                             ng-click="createUser(user)">Registrar-se</button>
                     </div>
                 </div>

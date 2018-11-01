@@ -19,7 +19,7 @@ exports.getById = async (id) => {
 
 exports.create = async (data) => {
     var month = new Month(data);
-    const res = await month.save()
+    const res = await month.save();
     return res;
 };
 
